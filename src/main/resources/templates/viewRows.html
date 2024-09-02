@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>View All Rows</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-5">
+        <h2>All Rows for User ID: <span th:text="${userId}"></span></h2>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Dates</th>
+                    <th>Text</th>
+                    <th>Contact Portal</th>
+                    <th>Contact Person</th>
+                    <th>Helping Material</th>
+                    <th>Checklist</th>
+                    <th>Enabled</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="row : ${rows}">
+                    <td th:text="${row['Dates']}"></td>
+                    <td th:text="${row['Text']}"></td>
+                    <td th:text="${row['Contact_Portal']}"></td>
+                    <td th:text="${row['Contact_Person']}"></td>
+                    <td th:text="${row['Helping_material']}"></td>
+                    <td th:text="${row['Checklist']}"></td>
+                    <td th:text="${row['Enabled']}"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .sidebar {
+            height: 100vh;
+            width: 200px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            background-color: #343a40;
+            color: #fff;
+            padding-top: 20px;
+            padding-bottom: 20px;
+            z-index: 1;
+        }
+        .sidebar a {
+            color: #ddd;
+            text-decoration: none;
+            display: block;
+            padding: 10px 20px;
+        }
+        .sidebar a:hover {
+            background-color: #495057;
+        }
+        .main-content {
+            margin-left: 200px;
+            padding: 20px;
+            z-index: 0;
+        }
+        .breadcrumb {
+            background: none;
+            padding: 0;
+            margin-bottom: 20px;
+        }
+        .breadcrumb-item + .breadcrumb-item::before {
+            content: ">";
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .hidden-section {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <h3 class="text-center">USER</h3>
+        <a href="#" class="btn btn-primary" id="sidebarViewDates">View Dates</a>
+        <a href="#" class="btn btn-primary" id="sidebarViewChecklist">Checklist</a>
+        <a href="#" class="btn btn-primary" id="sidebarViewContacts">Contacts</a>
+    </div>
+
+    <div class="main-content">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/AdminOptions">Home</a></li>
+            <li class="breadcrumb-item active">WELCOME</li>
+        </ol>
+        <div class="container">
+            <h1>Welcome, <span th:text="${username}"></span>!</h1>
+            <p>Your user ID is: <span id="userId" th:text="${userId}"></span></p>
+            
+            <!-- Main Page Buttons -->
+            <button class="btn btn-primary" id="mainViewDates">View Dates</button>
+            <button class="btn btn-primary" id="mainViewChecklist">Checklist</button>
+            <button class="btn btn-primary" id="mainViewContacts">Contacts</button>
+
+            <!-- Sections -->
+            <div id="datesSection" class="hidden-section">
+                <h2>Dates</h2>
+                <div id="datesContent"></div>
+            </div>
+            
+            <div id="checklistSection" class="hidden-section">
+                <h2>Checklist</h2>
+                <div id="checklistContent"></div>
+            </div>
+            
+            <div id="contactsSection" class="hidden-section">
+                <h2>Contacts</h2>
+                <div id="contactsContent"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        function showSection(sectionId) {
+            document.querySelectorAll('.hidden-section').forEach(section => {
+                section.style.display = 'none';
+            });
+            document.getElementById(sectionId).style.display = 'block';
+        }
+
+        function fetchData(endpoint, userId, contentId) {
+            fetch(`${endpoint}?userId=${userId}`)
+                .then(response => response.json())
+                .then(data => {
+                    const contentDiv = document.getElementById(contentId);
+                    contentDiv.innerHTML = '';
+
+                    if (endpoint.includes("viewDates")) {
+                        data.forEach(item => {
+                            contentDiv.innerHTML += `<p>Date: ${item.Dates}</p><p>Text: ${item.Text}</p><hr>`;
+                        });
+                    } else if (endpoint.includes("viewChecklist")) {
+                        data.forEach(item => {
+                            const checked = item.Enabled === 'Yes' ? 'checked' : '';
+                            const checklistText = item.Checklist;
+                            contentDiv.innerHTML += `<div><p><input type="checkbox" data-text="${checklistText}" ${checked}> ${checklistText} <button class="btn btn-secondary save-btn" data-text="${checklistText}">Save</button></p><hr></div>`;
+                        });
+                    } else if (endpoint.includes("viewContacts")) {
+                        data.forEach(item => {
+                            contentDiv.innerHTML += `<p>Contact Person: ${item.Contact_Person}</p><p>Contact Portal: ${item.Contact_Portal}</p><hr>`;
+                        });
+                    }
+                })
+                .catch(error => console.error('Error fetching data:', error));
+        }
+
+        document.getElementById('sidebarViewDates').addEventListener('click', function() {
+            showSection('datesSection');
+            const userId = document.getElementById('userId').innerText;
+            fetchData('/viewDates', userId, 'datesContent');
+        });
+
+        document.getElementById('sidebarViewChecklist').addEventListener('click', function() {
+            showSection('checklistSection');
+            const userId = document.getElementById('userId').innerText;
+            fetchData('/viewChecklist', userId, 'checklistContent');
+        });
+
+        document.getElementById('sidebarViewContacts').addEventListener('click', function() {
+            showSection('contactsSection');
+            const userId = document.getElementById('userId').innerText;
+            fetchData('/viewContacts', userId, 'contactsContent');
+        });
+
+        document.getElementById('mainViewDates').addEventListener('click', function() {
+            showSection('datesSection');
+            const userId = document.getElementById('userId').innerText;
+            fetchData('/viewDates', userId, 'datesContent');
+        });
+
+        document.getElementById('mainViewChecklist').addEventListener('click', function() {
+            showSection('checklistSection');
+            const userId = document.getElementById('userId').innerText;
+            fetchData('/viewChecklist', userId, 'checklistContent');
+        });
+
+        document.getElementById('mainViewContacts').addEventListener('click', function() {
+            showSection('contactsSection');
+            const userId = document.getElementById('userId').innerText;
+            fetchData('/viewContacts', userId, 'contactsContent');
+        });
+
+        document.addEventListener('click', function(event) {
+            if (event.target.classList.contains('save-btn')) {
+                const checklistText = event.target.getAttribute('data-text');
+                const checkbox = document.querySelector(`input[data-text="${checklistText}"]`);
+                const enabled = checkbox.checked ? 'Yes' : 'No';  // Ensuring proper state here
+                const userId = document.getElementById('userId').innerText;
+
+                fetch('/saveChecklistItem', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ userId, checklistText, enabled })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    alert('Checklist item updated successfully');
+                })
+                .catch(error => console.error('Error saving data:', error));
+            }
+        });
+    });
+
+    </script>
+</body>
+</html>
+
+

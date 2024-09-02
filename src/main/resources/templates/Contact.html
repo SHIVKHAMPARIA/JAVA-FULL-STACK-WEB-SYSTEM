@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>USER MANAGEMENT</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+   
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <!-- Bootstrap CSS -->
+    <link href= 
+"https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" 
+          rel="stylesheet"> 
+    
+    <!-- Font Awesome -->
+    <link href= 
+"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" 
+          rel="stylesheet"> 
+     <!-- Bootstrap Bundle with Popper -->
+    <script src= 
+"https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"> 
+    </script>       
+    
+  <style>
+        .marquee {
+            width: 100%;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+        .marquee span {
+            display: inline-block;
+            padding-left: 100%;
+            animation: marquee 15s linear infinite;
+        }
+        @keyframes marquee {
+            0%   { transform: translate(0, 0); }
+            100% { transform: translate(-100%, 0); }
+        }
+		        /* Make the top header sticky */
+		.sticky-top {
+		    position: sticky;
+		    top: 0;
+		    z-index: 1000; /* Ensure it stays on top of other content */
+		}
+		
+		/* Adjust navbar padding for smooth scrolling */
+		.navbar {
+		    padding: .5rem 1rem;
+		}
+		body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+        .footer {
+        	margin-top:30px;
+            background: linear-gradient(to right, #6a0dad, #0d1f38);
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+            bottom: 0;
+            width: 100%;
+        }
+        .footer-content h2 {
+            color: #fff;
+        }
+        .footer-content h5,
+        .footer-content p,
+        .footer-links a {
+            color: #fff;
+        }
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+        .footer hr {
+            background-color: #fff;
+        }
+        .form-floating-label {
+            position: relative;
+        }
+
+        .form-floating-label input {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background: linear-gradient(135deg, white, #f8f9fa);
+        }
+
+        .form-floating-label label {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            transition: all 0.2s ease-in-out;
+            pointer-events: none;
+            color: #aaa;
+        }
+
+        .form-floating-label input:focus + label,
+        .form-floating-label input:not(:placeholder-shown) + label {
+            top: -10px;
+            left: 10px;
+            font-size: 12px;
+            color: #3498db;
+            background: white;
+            padding: 0 5px;
+        }
+
+        .inquiry-form {
+            background: linear-gradient(to right, #87CEEB, #0d1f38);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+    </style>
+    
+        
+</head>
+
+<body>
+<div class="container-fluid bg-primary text-white py-2 d-flex justify-content-between align-items-center sticky-top">
+    <a class="navbar-brand text-white" href="#">
+        <img src="/images/logo.png" alt="Logo" width="30" height="30" class="d-inline-block align-text-top">
+    </a>
+
+    <!-- Start: Submenu Options -->
+    <div class="d-flex">
+        <a class="nav-link text-white me-3" href="/">About</a>
+        <a class="nav-link text-white me-3" href="Gallery">Gallery</a>
+        <a class="nav-link text-white me-3" href="OurCentres">Our Centres</a>
+        <a class="nav-link text-white me-3" href="Events">Events</a>
+        <a class="nav-link text-white me-3" href="Courses">Courses</a>
+        <a class="nav-link text-white" href="Contact">Contact</a>
+    </div>
+    <!-- End: Submenu Options -->
+
+    <a class="btn btn-outline-light" href="userlogin;jsessionid=80514D65513846050F0277A6D167395D" role="button">Login</a>
+</div>
+
+
+    <div class="container mt-5">
+        <div class="row">
+        	<div class="col-md-6">
+                <h3>Our Address</h3>
+                <div id="map-container" class="mb-4">
+                    <iframe
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d31108.056295609645!2d73.8455599!3d18.5091029!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bc2c12c351563bf%3A0x5470a94d7abf9b8d!2sSanity%20Technologies%20Private%20Limited!5e0!3m2!1sen!2sin!4v1624261412349!5m2!1sen!2sin"
+                        width="100%" height="450px" style="border:0;" allowfullscreen="" loading="lazy">
+                    </iframe>
+                </div>
+                <address>
+                    Flat no 203, Madhav heritage, Lokmanya Bal Gangadhar Tilak Rd, Ramashram Society, Rukmini Sadan Society,
+                    Perugate, Sadashiv Peth, Pune, Maharashtra 411030
+                </address>
+            </div>
+            <!-- Left Side: Inquiry Form -->
+            <div class="col-md-6">
+            <h3>Inquiry</h3>
+            <form class="inquiry-form" action="/saveInquiry" method="post">
+                <div class="form-group">
+                    <label for="fullName">Full Name</label>
+                    <input type="text" class="form-control" id="fullName" name="fullName" required>
+                </div>
+                <div class="form-group">
+                    <label for="phoneNumber">Phone Number</label>
+                    <input type="text" class="form-control" id="phoneNumber" name="phoneNumber" value="+91" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" class="form-control" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="state">State</label>
+                    <select class="form-control" id="state" name="state" required>
+                        <option value="" disabled selected></option>
+                        <option value="Maharashtra">Maharashtra</option>
+                        <option value="Gujarat">Gujarat</option>
+                        <!-- Add other states as needed -->
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="district">District</label>
+                    <select class="form-control" id="district" name="district" required>
+                        <option value="" disabled selected></option>
+                        <!-- District options will be populated dynamically based on state selection -->
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="city">City</label>
+                    <select class="form-control" id="city" name="city" required>
+                        <option value="" disabled selected></option>
+                        <!-- City options will be populated dynamically based on district selection -->
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="pincode">Pincode</label>
+                    <input type="text" class="form-control" id="pincode" name="pincode" required>
+                </div>
+                <div class="form-group">
+                    <label for="message">Message</label>
+                    <textarea class="form-control" id="message" name="message" rows="4" maxlength="500" required></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary mt-2">Submit</button>
+            </form>
+          </div>
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+<section class="">
+  <!-- Footer -->
+  <footer class="footer p-5"> 
+        <div class="container"> 
+            <div class="row"> 
+                <div class="col-md-3"> 
+                    <h2>LTOR TECHNOLOGY</h2> 
+                </div> 
+                <div class="col-md-3"> 
+                    <h5>About Us</h5> 
+                    <p> 
+                        LTOR is a leading platform that provides 
+                        computer science resources and coding challenges for 
+                        programmers and technology enthusiasts along with 
+                        interview and exam preparations for upcoming aspirants. 
+                    </p> 
+                </div> 
+                <div class="col-md-3"> 
+                    <h5>Contact Us</h5> 
+                    <ul class="list-unstyled"> 
+                        <li>Email: info@example.com</li> 
+                        <li>Phone: +1233567890</li> 
+                        <li>Address: 123 Street, City, Country</li> 
+                    </ul> 
+                </div> 
+                <div class="col-md-3"> 
+                    <h5>Follow Us</h5> 
+                    <ul class="list-inline footer-links"> 
+                        <li class="list-inline-item"> 
+                          <a href="#"> 
+                                <i class="fab fa-facebook"></i> 
+                          </a> 
+                          </li> 
+                        <li class="list-inline-item"> 
+                          <a href="#"> 
+                                <i class="fab fa-twitter"></i> 
+                          </a> 
+                        </li> 
+                        <li class="list-inline-item"> 
+                          <a href="#"> 
+                                <i class="fab fa-instagram"></i> 
+                          </a> 
+                        </li> 
+                        <li class="list-inline-item"> 
+                          <a href="#"> 
+                                <i class="fab fa-linkedin"></i> 
+                          </a> 
+                        </li> 
+                    </ul> 
+                </div> 
+            </div> 
+            <hr> 
+            <div class="row"> 
+                <div class="col-md-6"> 
+                    <p>© 2024 Your Website. All rights reserved.</p> 
+                </div> 
+                <div class="col-md-6 text-end"> 
+                    <ul class="list-inline footer-links"> 
+                        <li class="list-inline-item"> 
+                            <a href="#" class="text-white"> 
+                                Privacy Policy 
+                            </a> 
+                        </li> 
+                        <li class="list-inline-item"> 
+                            <a href="#" class="text-white"> 
+                                Terms of Service 
+                            </a> 
+                        </li> 
+                        <li class="list-inline-item"> 
+                            <a href="#" class="text-white"> 
+                                Sitemap 
+                            </a> 
+                        </li> 
+                    </ul> 
+                </div> 
+            </div> 
+        </div> 
+    </footer>
+  <!-- Footer -->
+</section>
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+<script th:inline="javascript">
+    document.addEventListener('DOMContentLoaded', function () {
+    	
+    	// New code for handling state, district, city selection, and pincode population
+        const stateSelect = document.getElementById('state');
+        const districtSelect = document.getElementById('district');
+        const citySelect = document.getElementById('city');
+        const pincodeInput = document.getElementById('pincode');
+
+        const data = {
+            "Maharashtra": {
+                "Mumbai": {
+                    "Mumbai": "400001",
+                    "Navi Mumbai": "400703"
+                },
+                "Pune": {
+                    "Pune": "411001",
+                    "Pimpri-Chinchwad": "411044"
+                }
+            },
+            "Gujarat": {
+                "Ahmedabad": {
+                    "Ahmedabad": "380001",
+                    "Gandhinagar": "382010"
+                },
+                "Surat": {
+                    "Surat": "395003",
+                    "Navsari": "396445"
+                }
+            }
+            // Add other states, districts, cities, and pincodes as needed
+        };
+
+        stateSelect.addEventListener('change', function () {
+            const state = stateSelect.value;
+            districtSelect.innerHTML = '<option value="" disabled selected>Choose District</option>';
+            citySelect.innerHTML = '<option value="" disabled selected>Choose City</option>';
+            pincodeInput.value = '';
+
+            if (state in data) {
+                const districts = Object.keys(data[state]);
+                districts.forEach(district => {
+                    const option = document.createElement('option');
+                    option.value = district;
+                    option.textContent = district;
+                    districtSelect.appendChild(option);
+                });
+            }
+        });
+
+        districtSelect.addEventListener('change', function () {
+            const state = stateSelect.value;
+            const district = districtSelect.value;
+            citySelect.innerHTML = '<option value="" disabled selected>Choose City</option>';
+            pincodeInput.value = '';
+
+            if (state in data && district in data[state]) {
+                const cities = Object.keys(data[state][district]);
+                cities.forEach(city => {
+                    const option = document.createElement('option');
+                    option.value = city;
+                    option.textContent = city;
+                    citySelect.appendChild(option);
+                });
+            }
+        });
+
+        citySelect.addEventListener('change', function () {
+            const state = stateSelect.value;
+            const district = districtSelect.value;
+            const city = citySelect.value;
+
+            if (state in data && district in data[state] && city in data[state][district]) {
+                pincodeInput.value = data[state][district][city];
+            } else {
+                pincodeInput.value = '';
+            }
+        });
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>USER MANAGEMENT</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+   
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <!-- Bootstrap CSS -->
+    <link href= 
+"https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" 
+          rel="stylesheet"> 
+    
+    <!-- Font Awesome -->
+    <link href= 
+"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" 
+          rel="stylesheet"> 
+     <!-- Bootstrap Bundle with Popper -->
+    <script src= 
+"https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"> 
+    </script>       
+    
+  <style>
+        .marquee {
+            width: 100%;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+        .marquee span {
+            display: inline-block;
+            padding-left: 100%;
+            animation: marquee 15s linear infinite;
+        }
+        @keyframes marquee {
+            0%   { transform: translate(0, 0); }
+            100% { transform: translate(-100%, 0); }
+        }
+		        /* Make the top header sticky */
+		.sticky-top {
+		    position: sticky;
+		    top: 0;
+		    z-index: 1000; /* Ensure it stays on top of other content */
+		}
+		
+		/* Adjust navbar padding for smooth scrolling */
+		.navbar {
+		    padding: .5rem 1rem;
+		}
+		body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+        .footer {
+        	margin-top:30px;
+            background: linear-gradient(to right, #6a0dad, #0d1f38);
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+            bottom: 0;
+            width: 100%;
+        }
+        .footer-content h2 {
+            color: #fff;
+        }
+        .footer-content h5,
+        .footer-content p,
+        .footer-links a {
+            color: #fff;
+        }
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+        .footer hr {
+            background-color: #fff;
+        }
+        
+        .centre-item-box {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 1px solid #ddd;
+            padding: 20px;
+            margin: 10px 0;
+            width: 100%;
+            background: linear-gradient(to right, #ffffff, #f0f0f0);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .centre-item-box img {
+            max-width: 100px;
+            max-height: 100px;
+            margin-right: 20px;
+        }
+        .centre-item-details {
+            flex-grow: 1;
+            font-family: Arial, sans-serif;
+            font-size: 18px;
+        }
+        .centre-item-details p {
+            margin: 0;
+        }
+        .map-button-container {
+            margin-top: 10px;
+        }
+        .map-button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            text-decoration: none;
+            font-size: 16px;
+        }
+        .map-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+    
+        
+</head>
+
+<body>
+<div class="container-fluid bg-primary text-white py-2 d-flex justify-content-between align-items-center sticky-top">
+    <a class="navbar-brand text-white" href="#">
+        <img src="/images/logo.png" alt="Logo" width="30" height="30" class="d-inline-block align-text-top">
+    </a>
+
+    <!-- Start: Submenu Options -->
+    <div class="d-flex">
+        <a class="nav-link text-white me-3" href="/">About</a>
+        <a class="nav-link text-white me-3" href="Gallery">Gallery</a>
+        <a class="nav-link text-white me-3" href="OurCentres">Our Centres</a>
+        <a class="nav-link text-white me-3" href="Events">Events</a>
+        <a class="nav-link text-white me-3" href="Courses">Courses</a>
+        <a class="nav-link text-white" href="Contact">Contact</a>
+    </div>
+    <!-- End: Submenu Options -->
+
+    <a class="btn btn-outline-light" href="userlogin;jsessionid=80514D65513846050F0277A6D167395D" role="button">Login</a>
+</div>
+
+  <body>
+     <div class="container mt-5">
+        <h1 class="mb-4">Centre Items</h1>
+        <div th:each="centreItem : ${centreItems}" class="centre-item-box">
+            <img th:src="@{${centreItem.imageUrl}}" alt="Centre Image">
+            <div class="centre-item-details">
+                <p><strong>Address: </strong><span th:text="${centreItem.address}"></span></p>
+                <div class="map-button-container">
+                    <a th:href="'https://www.google.com/maps?q=' + ${centreItem.location}" 
+                       class="map-button" target="_blank">View on Map</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+<section class="">
+  <!-- Footer -->
+  <footer class="footer p-5"> 
+        <div class="container"> 
+            <div class="row"> 
+                <div class="col-md-3"> 
+                    <h2>LTOR TECHNOLOGY</h2> 
+                </div> 
+                <div class="col-md-3"> 
+                    <h5>About Us</h5> 
+                    <p> 
+                        LTOR is a leading platform that provides 
+                        computer science resources and coding challenges for 
+                        programmers and technology enthusiasts along with 
+                        interview and exam preparations for upcoming aspirants. 
+                    </p> 
+                </div> 
+                <div class="col-md-3"> 
+                    <h5>Contact Us</h5> 
+                    <ul class="list-unstyled"> 
+                        <li>Email: info@example.com</li> 
+                        <li>Phone: +1233567890</li> 
+                        <li>Address: 123 Street, City, Country</li> 
+                    </ul> 
+                </div> 
+                <div class="col-md-3"> 
+                    <h5>Follow Us</h5> 
+                    <ul class="list-inline footer-links"> 
+                        <li class="list-inline-item"> 
+                          <a href="#"> 
+                                <i class="fab fa-facebook"></i> 
+                          </a> 
+                          </li> 
+                        <li class="list-inline-item"> 
+                          <a href="#"> 
+                                <i class="fab fa-twitter"></i> 
+                          </a> 
+                        </li> 
+                        <li class="list-inline-item"> 
+                          <a href="#"> 
+                                <i class="fab fa-instagram"></i> 
+                          </a> 
+                        </li> 
+                        <li class="list-inline-item"> 
+                          <a href="#"> 
+                                <i class="fab fa-linkedin"></i> 
+                          </a> 
+                        </li> 
+                    </ul> 
+                </div> 
+            </div> 
+            <hr> 
+            <div class="row"> 
+                <div class="col-md-6"> 
+                    <p>© 2024 Your Website. All rights reserved.</p> 
+                </div> 
+                <div class="col-md-6 text-end"> 
+                    <ul class="list-inline footer-links"> 
+                        <li class="list-inline-item"> 
+                            <a href="#" class="text-white"> 
+                                Privacy Policy 
+                            </a> 
+                        </li> 
+                        <li class="list-inline-item"> 
+                            <a href="#" class="text-white"> 
+                                Terms of Service 
+                            </a> 
+                        </li> 
+                        <li class="list-inline-item"> 
+                            <a href="#" class="text-white"> 
+                                Sitemap 
+                            </a> 
+                        </li> 
+                    </ul> 
+                </div> 
+            </div> 
+        </div> 
+    </footer>
+  <!-- Footer -->
+</section>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+</body>
+</html>

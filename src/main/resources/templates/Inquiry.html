@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin - Inquiries</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .sidebar {
+            height: 100vh;
+            width: 200px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            background-color: #343a40;
+            color: #fff;
+            padding-top: 20px;
+        }
+        .sidebar a {
+            color: #ddd;
+            text-decoration: none;
+            display: block;
+            padding: 10px 20px;
+        }
+        .sidebar a:hover {
+            background-color: #495057;
+        }
+        .main-content {
+            margin-left: 200px;
+            padding: 20px;
+        }
+        .breadcrumb {
+            background: none;
+            padding: 0;
+            margin-bottom: 20px;
+        }
+        .breadcrumb-item + .breadcrumb-item::before {
+            content: ">";
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="sidebar">
+    <h3 class="text-center">Admin</h3>
+    <a href="AdminOptions">Dashboard</a>
+    <a href="EditGallery">Edit Gallery</a>
+    <a href="EditTestimonial">Edit Testimonials</a>
+    <a href="EditCentres">Edit Centres</a>
+    <a href="EditCourses">Edit Courses</a>
+    <a href="EditEvents">Edit Events</a>
+    <a href="admin">View Users</a>
+    <a href="inquiry">View Inquiries</a>
+</div>
+
+<div class="container">
+    <h1>Inquiry Page</h1>
+
+    <!-- Search Form -->
+    <form th:action="@{/viewInquiries}" method="get">
+        <div class="row mb-3">
+            <div class="col">
+                <label for="city" class="form-label">City</label>
+                <input type="text" class="form-control" id="city" name="city">
+            </div>
+            <div class="col">
+                <label for="state" class="form-label">State</label>
+                <input type="text" class="form-control" id="state" name="state">
+            </div>
+            <div class="col">
+                <label for="fullName" class="form-label">Full Name</label>
+                <input type="text" class="form-control" id="fullName" name="fullName">
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col">
+                <label for="id" class="form-label">ID</label>
+                <input type="number" class="form-control" id="id" name="id">
+            </div>
+            <div class="col">
+                <label for="district" class="form-label">District</label>
+                <input type="text" class="form-control" id="district" name="district">
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary">View Inquiries</button>
+    </form>
+
+    <!-- Inquiries Table -->
+    <h2 class="mt-5">Inquiries List</h2>
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Full Name</th>
+            <th>Phone Number</th>
+            <th>Email</th>
+            <th>State</th>
+            <th>District</th>
+            <th>City</th>
+            <th>Pincode</th>
+            <th>Message</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="inquiry : ${inquiries}">
+            <td th:text="${inquiry.id}"></td>
+            <td th:text="${inquiry.fullName}"></td>
+            <td th:text="${inquiry.phoneNumber}"></td>
+            <td th:text="${inquiry.email}"></td>
+            <td th:text="${inquiry.state}"></td>
+            <td th:text="${inquiry.district}"></td>
+            <td th:text="${inquiry.city}"></td>
+            <td th:text="${inquiry.pincode}"></td>
+            <td th:text="${inquiry.message}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
+

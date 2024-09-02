@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Centres</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha384-iKb2aHg1BmKfs7nFK7+Wl4M2oFQX/Nl66/jNK26g2MRUpD4uF4+y8AAwV71a3Afo" crossorigin="anonymous">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .sidebar {
+            height: 100vh;
+            width: 200px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            background-color: #343a40;
+            color: #fff;
+            padding-top: 20px;
+            padding-bottom: 20px;
+            z-index: 1;
+        }
+        .sidebar a {
+            color: #ddd;
+            text-decoration: none;
+            display: block;
+            padding: 10px 20px;
+        }
+        .sidebar a:hover {
+            background-color: #495057;
+        }
+        .main-content {
+            margin-left: 200px;
+            padding: 20px;
+            z-index: 0;
+        }
+        .breadcrumb {
+            background: none;
+            padding: 0;
+            margin-bottom: 20px;
+        }
+        .breadcrumb-item + .breadcrumb-item::before {
+            content: ">";
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .list-group-item {
+            border: none;
+            border-radius: 10px;
+            color: #555;
+            transition: all 0.3s ease-in-out;
+        }
+        .list-group-item:hover {
+            background-color: #f0f0f0;
+            color: #333;
+        }
+        .form-select {
+            border-radius: 5px;
+        }
+        .btn-primary {
+            border-radius: 5px;
+        }
+        .form-section {
+            display: none;
+        }
+        .active-section {
+            display: block;
+        }
+        .table-responsive {
+            overflow-x: auto;
+        }
+        .table-sm td,
+        .table-sm th {
+            padding: .75rem;
+            font-size: 0.9rem;
+        }
+        .form-control,
+        .form-select {
+            max-width: 300px;
+        }
+        .td-location {
+            max-width: 200px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <h3 class="text-center">Admin</h3>
+        <a href="AdminOptions">Dashboard</a>
+        <a href="EditGallery">Edit Gallery</a>
+        <a href="EditTestimonial">Edit Testimonials</a>
+        <a href="EditCentres">Edit Centres</a>
+        <a href="EditCourses">Edit Courses</a>
+        <a href="EditEvents">Edit Events</a>
+        <a href="admin">View Users</a>
+    </div>
+
+    <div class="main-content">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="AdminOptions">Home</a></li>
+            <li class="breadcrumb-item active">Edit Centres</li>
+        </ol>
+        <div class="container">
+            <h1>Edit Centres</h1>
+            <div class="mb-4">
+                <h2><a href="#" id="addNewLink">Add Centre</a></h2>
+                <div class="form-section" id="addNewForm">
+                    <form id="addCentreForm" action="/EditCentres/add" method="post" enctype="multipart/form-data">
+                        <div class="mb-3">
+                            <label for="image" class="form-label">Image</label>
+                            <input type="file" class="form-control" id="image" name="image" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="address" class="form-label">Address</label>
+                            <input type="text" class="form-control" id="address" name="address" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="location" class="form-label">Location</label>
+                            <input type="url" class="form-control" id="location" name="location" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="enabled" class="form-label">Enabled</label>
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" id="enabled" name="enabled" value="0x01">
+                                <label class="form-check-label" for="enabled"></label>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Add</button>
+                    </form>
+                </div>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-sm">
+                    <thead>
+                        <tr>
+                            <th>Image</th>
+                            <th>Address</th>
+                            <th>Location</th>
+                            <th>Enabled</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="item : ${centreItems}">
+                            <td><img th:src="@{${item.imageUrl}}" alt="Image" style="width: 80px;"></td>
+                            <td th:text="${item.address}"></td>
+                            <td class="td-location" th:text="${item.location}"></td>
+                            <td>
+                                <form action="/EditCentres/edit" method="post" class="d-flex align-items-center">
+    								<input type="hidden" name="id" th:value="${item.id}">
+    								<div class="form-check">
+        								<input class="form-check-input" type="checkbox" id="enabledYes" name="enabledYes" value="true" th:checked="${item.enabled}">
+        								<label class="form-check-label" for="enabledYes">Yes</label>
+    								</div>
+    								<div class="form-check ms-3">
+        								<input class="form-check-input" type="checkbox" id="enabledNo" name="enabledNo" value="true" th:checked="${!item.enabled}">
+        								<label class="form-check-label" for="enabledNo">No</label>
+    								</div>
+    								<button type="submit" class="btn btn-primary btn-sm ms-2">Save</button>
+    							</form>
+                                
+                            </td>
+                            <td>
+                                <form action="/EditCentres/delete" method="post">
+                                    <input type="hidden" name="id" th:value="${item.id}">
+                                    <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                                </form>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('addNewLink').addEventListener('click', function(e) {
+            e.preventDefault();
+            document.getElementById('addNewForm').classList.toggle('active-section');
+        });
+
+        document.getElementById('addCentreForm').addEventListener('submit', function(e) {
+            var enabledSwitch = document.getElementById('enabled');
+            if (!enabledSwitch.checked) {
+                e.preventDefault();
+                alert('Enable it to save');
+            }
+        });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+</body>
+</html>
+
